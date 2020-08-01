@@ -4,29 +4,33 @@ from django.shortcuts import render
 import json
 import time
 from MRYW.models import daily_question
+import requests
 
 # Create your views here.
 person_dic = {
-    "a": "admin",
-    "b": "admin2",
+    "backpack": "娇娇",
+    "wxx": "王小许",
+    "huyajie": "胡亚捷",
+    "baimingtai": "白明泰",
+    "zyx20041026": "张瑜璇",
+    "kxz1823115435": "孔祥壮",
+    "yy": "闫毅",
+    "zhs": "张海生",
 }
 
 appid = 'wx4e76c2dad14e3341'
 secret = 'd5415026ee451dad7fa865da326c1c9a'
 QUESTIONS = [
-        "Q1",
-        "Q2",
-        "Q3",
-        "Q4",
-        "Q5",
-        "Q6",
-        "Q7",
-        "Q8",
-        "Q9",
+        "我今天是否完成了自己的小目标",
+        "今天有哪些事可以让我得到成长",
+        "今天有哪些地方我做得还不够好",
+        "我人生的终极目标是什么",
+        "我明天的小目标是什么",
+        "有哪些想对自己说的话",
         ]
 
 def index(request):
-    # print(request)
+    print("in request")
     person_id = request.GET.get('person_id')
     print(person_id, "person_id")
     if person_id not in person_dic.keys():
@@ -63,6 +67,7 @@ def index(request):
 
 
 def create(request):
+
     if request.method == "POST":
         data = request.body.decode("utf-8")
         # print("data:", data)
@@ -94,3 +99,13 @@ def create(request):
         s = json.dumps(dic)
 
         return HttpResponse(s)
+
+
+def login(request):
+    res_code = request.GET.get('res_code')
+    url = f'https://api.weixin.qq.com/sns/jscode2session?appid={appid}&secret={secret}&js_code={res_code}&grant_type=authorization_code'
+    resp = requests.get(url)
+
+    ret = resp.text
+
+    return HttpResponse(ret)
