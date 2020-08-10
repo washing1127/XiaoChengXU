@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'MRYW',
-    'werkzeug_debugger_runserver',
-    'django_extensions',
+    #'werkzeug_debugger_runserver',
+    #'django_extensions',
 ]
 
 MIDDLEWARE = [

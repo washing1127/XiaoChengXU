@@ -7,4 +7,5 @@ from MRYW import views
 urlpatterns = [
     url(r'index/', views.index),
     url(r'save/', views.create),
+    url(r'login/', views.login),
 ]

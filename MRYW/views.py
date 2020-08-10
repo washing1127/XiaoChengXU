@@ -5,6 +5,8 @@ import json
 import time
 from MRYW.models import daily_question
 
+import requests
+
 # Create your views here.
 person_dic = {
     "a": "admin",
@@ -13,6 +15,7 @@ person_dic = {
 
 appid = 'wx4e76c2dad14e3341'
 secret = 'd5415026ee451dad7fa865da326c1c9a'
+
 QUESTIONS = [
         "Q1",
         "Q2",
@@ -94,3 +97,13 @@ def create(request):
         s = json.dumps(dic)
 
         return HttpResponse(s)
+
+
+def login(request):
+    res_code = request.GET.get('res_code')
+    url = f'https://api.weixin.qq.com/sns/jscode2session?appid={appid}&secret={secret}&js_code={res_code}&grant_type=authorization_code'
+    resp = requests.get(url)
+    # resp.status_code
+    ret = resp.text
+
+    return HttpResponse(ret)
